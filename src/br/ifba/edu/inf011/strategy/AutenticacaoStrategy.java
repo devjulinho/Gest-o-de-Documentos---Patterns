@@ -1,4 +1,4 @@
-package br.ifba.edu.inf011.model.autenticacao;
+package br.ifba.edu.inf011.strategy;
 
 import br.ifba.edu.inf011.model.documentos.Documento;
 

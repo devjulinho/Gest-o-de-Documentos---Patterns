@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ifba.edu.inf011.af.DocumentOperatorFactory;
-import br.ifba.edu.inf011.model.autenticacao.AutenticacaoStrategy;
-import br.ifba.edu.inf011.model.autenticacao.GestorAutenticacao;
 import br.ifba.edu.inf011.model.documentos.Documento;
 import br.ifba.edu.inf011.model.documentos.Privacidade;
 import br.ifba.edu.inf011.model.operador.Operador;
+import br.ifba.edu.inf011.strategy.AutenticacaoFactory;
+import br.ifba.edu.inf011.strategy.AutenticacaoStrategy;
 
 public class GerenciadorDocumentoModel {
 
@@ -18,7 +18,7 @@ public class GerenciadorDocumentoModel {
     private Autenticador autenticador;
     private GestorDocumento gestor;
     private Documento atual;
-    private GestorAutenticacao gestorAutenticacao = new GestorAutenticacao();
+    private AutenticacaoFactory gestorAutenticacao = new AutenticacaoFactory();
     
 
 

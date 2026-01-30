@@ -1,13 +1,13 @@
-package br.ifba.edu.inf011.model.autenticacao;
+package br.ifba.edu.inf011.strategy;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class GestorAutenticacao {
+public class AutenticacaoFactory {
 	private final Map<Integer, AutenticacaoStrategy> strategies;
 	private final AutenticacaoStrategy defaultStrategy;
 	
-	public GestorAutenticacao() {
+	public AutenticacaoFactory() {
 		this.strategies = new HashMap<>();
 		this.defaultStrategy = new AutenticadorDefaultStrategy();
 		this.register(0, new AutenticadorCriminalStrategy());
