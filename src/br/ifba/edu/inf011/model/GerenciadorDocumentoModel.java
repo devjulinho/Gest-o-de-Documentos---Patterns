@@ -29,21 +29,21 @@ public class GerenciadorDocumentoModel {
         this.atual = null;
     }
 
-    public Documento criarDocumento(int tipoAutenticadorIndex, Privacidade privacidade) throws FWDocumentException {
-        Operador operador = factory.getOperador();
-        Documento documento = factory.getDocumento();
-        
-        operador.inicializar("jdc", "João das Couves");
-        documento.inicializar(operador, privacidade);
-        autenticadorStrategy = gestorAutenticacao.getStrategy(tipoAutenticadorIndex);
-        autenticador = new Autenticador(autenticadorStrategy);
-        
-        this.autenticador.autenticar(documento);
-        
-        this.repositorio.add(documento);
-        this.atual = documento;
-        return documento;
-    }
+//    public Documento criarDocumento(int tipoAutenticadorIndex, Privacidade privacidade) throws FWDocumentException {
+//        Operador operador = factory.getOperador();
+//        Documento documento = factory.getDocumento();
+//        
+//        operador.inicializar("jdc", "João das Couves");
+//        documento.inicializar(operador, privacidade);
+//        autenticadorStrategy = gestorAutenticacao.getStrategy(tipoAutenticadorIndex);
+//        autenticador = new Autenticador(autenticadorStrategy);
+//        
+//        this.autenticador.autenticar(documento);
+//        
+//        this.repositorio.add(documento);
+//        this.atual = documento;
+//        return documento;
+//    }
 
     public void salvarDocumento(Documento doc, String conteudo) throws Exception {
         if (doc != null) {
@@ -56,23 +56,23 @@ public class GerenciadorDocumentoModel {
         return repositorio;
     }
     
-    public Documento assinarDocumento(Documento doc) throws FWDocumentException {
-        if (doc == null) return null;
-        Operador operador = factory.getOperador();
-        operador.inicializar("jdc", "João das Couves");
-        Documento assinado = gestor.assinar(doc, operador);
-        this.atualizarRepositorio(doc, assinado);
-        this.atual = assinado;
-        return assinado;
-    }    
+//    public Documento assinarDocumento(Documento doc) throws FWDocumentException {
+//        if (doc == null) return null;
+//        Operador operador = factory.getOperador();
+//        operador.inicializar("jdc", "João das Couves");
+//        Documento assinado = gestor.assinar(doc, operador);
+//        this.atualizarRepositorio(doc, assinado);
+//        this.atual = assinado;
+//        return assinado;
+//    }    
     
-    public Documento protegerDocumento(Documento doc) throws FWDocumentException {
-        if (doc == null) return null;
-        Documento protegido = gestor.proteger(doc);
-        this.atualizarRepositorio(doc, protegido);
-        this.atual = protegido;
-        return protegido;        
-    }    
+//    public Documento protegerDocumento(Documento doc) throws FWDocumentException {
+//        if (doc == null) return null;
+//        Documento protegido = gestor.proteger(doc);
+//        this.atualizarRepositorio(doc, protegido);
+//        this.atual = protegido;
+//        return protegido;        
+//    }    
     
     
     public Documento tornarUrgente(Documento doc) throws FWDocumentException {

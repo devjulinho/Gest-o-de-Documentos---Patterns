@@ -5,6 +5,7 @@ import java.util.List;
 import br.ifba.edu.inf011.af.DocumentOperatorFactory;
 import br.ifba.edu.inf011.model.Autenticador;
 import br.ifba.edu.inf011.model.FWDocumentException;
+import br.ifba.edu.inf011.model.GerenciadorDocumentoModel;
 import br.ifba.edu.inf011.model.documentos.Documento;
 import br.ifba.edu.inf011.model.documentos.Privacidade;
 import br.ifba.edu.inf011.model.operador.Operador;
@@ -28,17 +29,17 @@ public class CriarDocumentoCommand implements Command{
 		this.operador = operador;
 		this.tipoAutenticadorIndex = tipoAutenticadorIndex;
 		this.privacidade = privacidade;
+		autenticadorStrategy = gestorAutenticacao.getStrategy(tipoAutenticadorIndex);
+		this.autenticador = new Autenticador(autenticadorStrategy);
 	}
 
-	public void execute() {
+	public Documento execute() {
 		try {
 			documento = factory.getDocumento();
 			operador = factory.getOperador();
 			
 	        operador.inicializar("jdc", "João das Couves");
 	        documento.inicializar(operador, privacidade);
-	        autenticadorStrategy = gestorAutenticacao.getStrategy(tipoAutenticadorIndex);
-	        autenticador = new Autenticador(autenticadorStrategy);
 	        
 	        this.autenticador.autenticar(documento);
 	        
@@ -47,5 +48,11 @@ public class CriarDocumentoCommand implements Command{
 		} catch (FWDocumentException exception){
 			System.out.println("exception");
 		}
+		
+		return documento;
+	}
+	
+	public void undo() {
+		this.repositorio.remove(documento);
 	}
 }
