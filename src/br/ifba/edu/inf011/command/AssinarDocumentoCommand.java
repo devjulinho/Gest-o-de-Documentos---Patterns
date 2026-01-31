@@ -17,20 +17,23 @@ public class AssinarDocumentoCommand implements Command{ //TALVEZ NEM PRECISE DE
 	private DocumentOperatorFactory factory;
 	private GestorDocumento gestor = new GestorDocumento();
 	
-	public AssinarDocumentoCommand(Documento documento, DocumentOperatorFactory factory) {
+	public AssinarDocumentoCommand(Documento documento) {
 		this.documento = documento;
-		this.factory = factory;
 	}
 
 	public Documento execute() {
         if (documento == null)
         		return null;
-        
-        Operador operador = factory.getOperador();
-        operador.inicializar("jdc", "João das Couves");
-        Documento assinado = gestor.assinar(documento, operador);
-        this.atualizarRepositorio(documento, assinado);
-        this.atual = assinado;
+        Documento assinado = null;
+        try {
+	        Operador operador = factory.getOperador();
+	        operador.inicializar("jdc", "João das Couves");
+	        assinado = gestor.assinar(documento, operador);
+		//  this.atualizarRepositorio(documento, assinado);
+		// 	this.atual = assinado;
+			} catch (FWDocumentException e) {
+				e.printStackTrace();
+			}
         return assinado;
 	}
 	

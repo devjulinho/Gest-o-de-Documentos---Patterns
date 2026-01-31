@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import br.ifba.edu.inf011.af.DocumentOperatorFactory;
+import br.ifba.edu.inf011.command.Command;
 import br.ifba.edu.inf011.model.FWDocumentException;
 import br.ifba.edu.inf011.model.GerenciadorDocumentoModel;
 import br.ifba.edu.inf011.model.documentos.Documento;
@@ -37,7 +38,7 @@ public abstract class AbstractGerenciadorDocumentosUI extends JFrame implements 
     
 
     public AbstractGerenciadorDocumentosUI(DocumentOperatorFactory factory) {
-        this.controller = new GerenciadorDocumentoModel(factory);
+    	this.controller = controller.getInstance();
     	this.listDocs = new DefaultListModel<String>();
     	this.barraSuperior = new JPanelBarraSuperior<String>(tipos);
     	this.areaEdicao = new JPanelAreaEdicao();

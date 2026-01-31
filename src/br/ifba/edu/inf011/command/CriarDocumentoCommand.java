@@ -1,7 +1,5 @@
 package br.ifba.edu.inf011.command;
 
-import java.util.List;
-
 import br.ifba.edu.inf011.af.DocumentOperatorFactory;
 import br.ifba.edu.inf011.model.Autenticador;
 import br.ifba.edu.inf011.model.FWDocumentException;
@@ -14,37 +12,33 @@ import br.ifba.edu.inf011.strategy.AutenticacaoStrategy;
 
 public class CriarDocumentoCommand implements Command{
 	private DocumentOperatorFactory factory;
-	private Documento documento;
-	private Operador operador;
-	private int tipoAutenticadorIndex;
 	private Privacidade privacidade;
     private AutenticacaoFactory gestorAutenticacao = new AutenticacaoFactory();
     private AutenticacaoStrategy autenticadorStrategy;
     private Autenticador autenticador;
-	private List<Documento> repositorio;
+    private GerenciadorDocumentoModel repositorio;
 	
-	public CriarDocumentoCommand(Documento documento, Operador operador, int tipoAutenticadorIndex, Privacidade privacidade, DocumentOperatorFactory factory) {
-		this.factory = factory;
-		this.documento = documento;
-		this.operador = operador;
-		this.tipoAutenticadorIndex = tipoAutenticadorIndex;
+	public CriarDocumentoCommand(int tipoAutenticadorIndex, Privacidade privacidade, DocumentOperatorFactory factory) {
 		this.privacidade = privacidade;
 		autenticadorStrategy = gestorAutenticacao.getStrategy(tipoAutenticadorIndex);
 		this.autenticador = new Autenticador(autenticadorStrategy);
+		this.factory = factory;
+		this.repositorio = GerenciadorDocumentoModel.getInstance();
 	}
 
 	public Documento execute() {
+		Documento documento = null;
 		try {
 			documento = factory.getDocumento();
-			operador = factory.getOperador();
+			Operador operador = factory.getOperador();
 			
 	        operador.inicializar("jdc", "João das Couves");
 	        documento.inicializar(operador, privacidade);
 	        
 	        this.autenticador.autenticar(documento);
 	        
-	        this.repositorio.add(documento);
-			
+	        repositorio.addDocumento(documento);
+	        
 		} catch (FWDocumentException exception){
 			System.out.println("exception");
 		}
@@ -52,7 +46,7 @@ public class CriarDocumentoCommand implements Command{
 		return documento;
 	}
 	
-	public void undo() {
-		this.repositorio.remove(documento);
-	}
+//	public void undo() {
+//		this.repositorio.remove(documento);
+//	}
 }

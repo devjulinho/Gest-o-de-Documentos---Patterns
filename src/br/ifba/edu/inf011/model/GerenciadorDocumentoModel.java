@@ -12,22 +12,29 @@ import br.ifba.edu.inf011.strategy.AutenticacaoStrategy;
 
 public class GerenciadorDocumentoModel {
 
-	private List<Documento> repositorio;
-    private DocumentOperatorFactory factory;
-    private AutenticacaoStrategy autenticadorStrategy;
-    private Autenticador autenticador;
-    private GestorDocumento gestor;
+	public List<Documento> repositorio;
+//    private DocumentOperatorFactory factory;
+//    private AutenticacaoStrategy autenticadorStrategy;
+//    private Autenticador autenticador;
+//    private GestorDocumento gestor;
     private Documento atual;
-    private AutenticacaoFactory gestorAutenticacao = new AutenticacaoFactory();
+//    private AutenticacaoFactory gestorAutenticacao = new AutenticacaoFactory();
+    private static GerenciadorDocumentoModel instance;
     
-
-
-    public GerenciadorDocumentoModel(DocumentOperatorFactory factory) {
+    private GerenciadorDocumentoModel() {
         this.repositorio = new ArrayList<>();
-        this.factory = factory;
-        this.gestor = new GestorDocumento();
+//        this.factory = factory;
+//        this.gestor = new GestorDocumento();
         this.atual = null;
     }
+    
+    //SINGLETON!!!!!!!!!!
+	public static GerenciadorDocumentoModel getInstance() {
+		if (instance == null) {
+			instance = new GerenciadorDocumentoModel();
+		}
+		return instance;
+	}
 
 //    public Documento criarDocumento(int tipoAutenticadorIndex, Privacidade privacidade) throws FWDocumentException {
 //        Operador operador = factory.getOperador();
@@ -75,20 +82,24 @@ public class GerenciadorDocumentoModel {
 //    }    
     
     
-    public Documento tornarUrgente(Documento doc) throws FWDocumentException {
-        if (doc == null) return null;
-        Documento urgente = gestor.tornarUrgente(doc);
-        this.atualizarRepositorio(doc, urgente);
-        this.atual = urgente;
-        return urgente;         
-    }      
-    
+//    public Documento tornarUrgente(Documento doc) throws FWDocumentException {
+//        if (doc == null) return null;
+//        Documento urgente = gestor.tornarUrgente(doc);
+//        this.atualizarRepositorio(doc, urgente);
+//        this.atual = urgente;
+//        return urgente;         
+//    }      
+//    
     public void atualizarRepositorio(Documento antigo, Documento novo) {
         int index = repositorio.indexOf(antigo);
         if (index != -1) {
             repositorio.set(index, novo);
         }
     } 
+    
+	public void addDocumento(Documento doc) {
+		this.repositorio.add(doc);
+	}
     
 	public Documento getDocumentoAtual() {
 		return this.atual;
