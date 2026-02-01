@@ -85,12 +85,6 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 		}
 	}	
 	
-	// ========== MACROS - Ações Rápidas ==========
-	
-	/**
-	 * Macro: Alterar e Assinar
-	 * Permite editar o conteúdo do documento e assinar em uma única operação.
-	 */
 	protected void alterarEAssinar() {
 		if (this.atual == null) {
 			JOptionPane.showMessageDialog(this, "Nenhum documento selecionado!");
@@ -98,21 +92,15 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 		}
 		
 		try {
-			// Pega o conteúdo atual da área de edição
 			String novoConteudo = this.areaEdicao.getConteudo();
 			
-			// Executa a macro: Salvar → Assinar
 			this.atual = this.executarComando(new AlterarEAssinarMacro(this.atual, novoConteudo, factory));
 			this.refreshUI();
 		} catch (RuntimeException e) {
 			JOptionPane.showMessageDialog(this, "Erro ao Alterar e Assinar: " + e.getMessage());
 		}
 	}
-	
-	/**
-	 * Macro: Priorizar
-	 * Torna o documento urgente e assina em uma única operação.
-	 */
+
 	protected void priorizar() {
 		if (this.atual == null) {
 			JOptionPane.showMessageDialog(this, "Nenhum documento selecionado!");
@@ -120,7 +108,6 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 		}
 		
 		try {
-			// Executa a macro: Tornar Urgente → Assinar
 			this.atual = this.executarComando(new PriorizarMacro(this.atual, factory));
 			this.refreshUI();
 		} catch (RuntimeException e) {
@@ -152,6 +139,4 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 		command.redo();
 		this.refreshUI();
 	}
-	
-
 }
