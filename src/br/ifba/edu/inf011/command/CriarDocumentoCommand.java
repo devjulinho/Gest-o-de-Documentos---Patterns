@@ -17,8 +17,7 @@ public class CriarDocumentoCommand implements Command{
 	
 	public CriarDocumentoCommand(int tipoAutenticadorIndex, Privacidade privacidade, DocumentOperatorFactory factory) {
 		this.privacidade = privacidade;
-		autenticadorStrategy = gestorAutenticacao.getStrategy(tipoAutenticadorIndex);
-		this.autenticador = new Autenticador(autenticadorStrategy);
+		this.autenticador = new Autenticador(tipoAutenticadorIndex);
 		this.factory = factory;
 		this.repositorio = GerenciadorDocumentoModel.getInstance();
 	}

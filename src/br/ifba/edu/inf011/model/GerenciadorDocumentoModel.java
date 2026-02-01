@@ -4,48 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ifba.edu.inf011.af.DocumentOperatorFactory;
+import br.ifba.edu.inf011.command.*;
 import br.ifba.edu.inf011.model.autenticacao.InicializadorChain;
 import br.ifba.edu.inf011.model.documentos.Documento;
 import br.ifba.edu.inf011.model.documentos.Privacidade;
-import br.ifba.edu.inf011.model.operador.Operador;
 
 public class GerenciadorDocumentoModel {
 
+	private static GerenciadorDocumentoModel instance;
 	private List<Documento> repositorio;
     private DocumentOperatorFactory factory;
-    private Autenticador autenticador;
-    private GestorDocumento gestor;
     private Documento atual;
+    private CommandManager commandManager;
     
     public GerenciadorDocumentoModel(DocumentOperatorFactory factory) {
         this.repositorio = new ArrayList<>();
         this.factory = factory;
-        this.gestor = new GestorDocumento();
         this.atual = null;
+        this.commandManager = new CommandManager();
+        instance = this;
 
         InicializadorChain.inicializar();
     }
+    
+    public static GerenciadorDocumentoModel getInstance() {
+        return instance;
+    }
 
     public Documento criarDocumento(int tipoAutenticadorIndex, Privacidade privacidade) throws FWDocumentException {
-        Operador operador = factory.getOperador();
-        Documento documento = factory.getDocumento();
-        
-        operador.inicializar("jdc", "João das Couves");
-        documento.inicializar(operador, privacidade);
-        autenticador = new Autenticador(tipoAutenticadorIndex);
-        this.autenticador.autenticar(documento);
-        
-        this.autenticador.autenticar(documento);
-        
-        this.repositorio.add(documento);
+        Command command = new CriarDocumentoCommand(tipoAutenticadorIndex, privacidade, factory);
+        Documento documento = command.execute();
+        commandManager.salvarHistorico(command);
         this.atual = documento;
         return documento;
     }
 
     public void salvarDocumento(Documento doc, String conteudo) throws Exception {
-        if (doc != null) {
-            doc.setConteudo(conteudo);
-        }
+        Command command = new SalvarDocumentoCommand(doc, conteudo);
+        command.execute();
+        commandManager.salvarHistorico(command);
         this.atual = doc;
     }
 
@@ -53,31 +50,30 @@ public class GerenciadorDocumentoModel {
         return repositorio;
     }
     
+    public void addDocumento(Documento documento) {
+        this.repositorio.add(documento);
+    }
+    
     public Documento assinarDocumento(Documento doc) throws FWDocumentException {
-        if (doc == null) return null;
-        Operador operador = factory.getOperador();
-        operador.inicializar("jdc", "João das Couves");
-        Documento assinado = gestor.assinar(doc, operador);
-        this.atualizarRepositorio(doc, assinado);
-        this.atual = assinado;
+        Command command = new AssinarDocumentoCommand(doc, factory);
+        Documento assinado = command.execute();
+        commandManager.salvarHistorico(command);
         return assinado;
     }    
     
     public Documento protegerDocumento(Documento doc) throws FWDocumentException {
-        if (doc == null) return null;
-        Documento protegido = gestor.proteger(doc);
-        this.atualizarRepositorio(doc, protegido);
-        this.atual = protegido;
-        return protegido;        
+        Command command = new ProtegerDocumentoCommand(doc);
+        Documento protegido = command.execute();
+        commandManager.salvarHistorico(command);
+        return protegido;
     }    
     
     
     public Documento tornarUrgente(Documento doc) throws FWDocumentException {
-        if (doc == null) return null;
-        Documento urgente = gestor.tornarUrgente(doc);
-        this.atualizarRepositorio(doc, urgente);
-        this.atual = urgente;
-        return urgente;         
+        Command command = new TornarUrgenteCommand(doc);
+        Documento urgente = command.execute();
+        commandManager.salvarHistorico(command);
+        return urgente;
     }      
     
     public void atualizarRepositorio(Documento antigo, Documento novo) {
