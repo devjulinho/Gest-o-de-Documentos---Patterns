@@ -1,0 +1,14 @@
+[ ] -> 2026-02-01T16:43:01.710792600:CriarDocumentoCommand - Documento Nº CRI-2026-253886230
+[ ] -> 2026-02-01T16:43:01.847431600:CriarDocumentoCommand - Documento Nº CRI-2026-455485301
+[ ] -> 2026-02-01T16:43:02.006912600:CriarDocumentoCommand - Documento Nº CRI-2026-786111929
+[ ] -> 2026-02-01T16:43:03.235346300:{DESFAZER} - CriarDocumentoCommand - Documento Nº CRI-2026-786111929
+[ ] -> 2026-02-01T16:43:03.388839:{DESFAZER} - CriarDocumentoCommand - Documento Nº CRI-2026-455485301
+[ ] -> 2026-02-01T16:43:03.572886500:{DESFAZER} - CriarDocumentoCommand - Documento Nº CRI-2026-253886230
+[ ] -> 2026-02-01T16:43:03.973857300:{TENTATIVA DESFAZER} - Já está no início do histórico
+[ ] -> 2026-02-01T16:43:04.315832600:{TENTATIVA DESFAZER} - Já está no início do histórico
+[ ] -> 2026-02-01T16:43:05.669304300:{REFAZER} - CriarDocumentoCommand - Documento Nº CRI-2026-253886230
+[ ] -> 2026-02-01T16:43:05.852251800:{REFAZER} - CriarDocumentoCommand - Documento Nº CRI-2026-455485301
+[ ] -> 2026-02-01T16:43:06.332551100:{REFAZER} - CriarDocumentoCommand - Documento Nº CRI-2026-786111929
+[ ] -> 2026-02-01T16:43:06.684650200:{TENTATIVA REFAZER} - Já está no final do histórico
+[ ] -> 2026-02-01T16:43:06.996751600:{TENTATIVA REFAZER} - Já está no final do histórico
+[ ] -> 2026-02-01T16:43:07.380804800:{TENTATIVA REFAZER} - Já está no final do histórico

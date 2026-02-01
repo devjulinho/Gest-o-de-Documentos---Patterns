@@ -19,32 +19,35 @@ public class CommandManager {
 	}
 	
 	public Command desfazer() {
-		if (virtualSize == -1)
+		if (virtualSize == -1) {
+			logger.log("{TENTATIVA DESFAZER} - Nenhum comando no histórico");
 			return null;
+		}
 		
 		if (virtualSize <= 0) {
-			Command command = historico.get(0);
-			logger.log("{DESFAZER} -" + command.toString());
-			return command;
+			logger.log("{TENTATIVA DESFAZER} - Já está no início do histórico");
+			return null;
 		}
+		
 		virtualSize--;
 		Command command = historico.get(virtualSize);
-		logger.log("{DESFAZER} -" + command.toString());
+		logger.log("{DESFAZER} - " + command.toString());
 		return command;
 	}
 	
 	public Command refazer() {
-		if (virtualSize == -1)
+		if (virtualSize == -1) {
+			logger.log("{TENTATIVA REFAZER} - Nenhum comando no histórico");
 			return null;
+		}
 		
 		if (virtualSize > historico.size() - 1) {
-			Command command = historico.get(historico.size() - 1);
-			logger.log("{REFAZER} -" + command.toString());
-			return command;
+			logger.log("{TENTATIVA REFAZER} - Já está no final do histórico");
+			return null;
 		}
 		
 		Command command = historico.get(virtualSize);
-		logger.log("{REFAZER} -" + command.toString());
+		logger.log("{REFAZER} - " + command.toString());
 		virtualSize++;
 		return command;
 	}
