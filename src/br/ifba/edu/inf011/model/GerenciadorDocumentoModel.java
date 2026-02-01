@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ifba.edu.inf011.af.DocumentOperatorFactory;
-import br.ifba.edu.inf011.model.autenticacao.AutenticacaoStrategy;
-import br.ifba.edu.inf011.model.autenticacao.GestorAutenticacao;
+import br.ifba.edu.inf011.model.autenticacao.InicializadorChain;
 import br.ifba.edu.inf011.model.documentos.Documento;
 import br.ifba.edu.inf011.model.documentos.Privacidade;
 import br.ifba.edu.inf011.model.operador.Operador;
@@ -14,19 +13,17 @@ public class GerenciadorDocumentoModel {
 
 	private List<Documento> repositorio;
     private DocumentOperatorFactory factory;
-    private AutenticacaoStrategy autenticadorStrategy;
     private Autenticador autenticador;
     private GestorDocumento gestor;
     private Documento atual;
-    private GestorAutenticacao gestorAutenticacao = new GestorAutenticacao();
     
-
-
     public GerenciadorDocumentoModel(DocumentOperatorFactory factory) {
         this.repositorio = new ArrayList<>();
         this.factory = factory;
         this.gestor = new GestorDocumento();
         this.atual = null;
+
+        InicializadorChain.inicializar();
     }
 
     public Documento criarDocumento(int tipoAutenticadorIndex, Privacidade privacidade) throws FWDocumentException {
@@ -35,8 +32,8 @@ public class GerenciadorDocumentoModel {
         
         operador.inicializar("jdc", "João das Couves");
         documento.inicializar(operador, privacidade);
-        autenticadorStrategy = gestorAutenticacao.getStrategy(tipoAutenticadorIndex);
-        autenticador = new Autenticador(autenticadorStrategy);
+        autenticador = new Autenticador(tipoAutenticadorIndex);
+        this.autenticador.autenticar(documento);
         
         this.autenticador.autenticar(documento);
         
