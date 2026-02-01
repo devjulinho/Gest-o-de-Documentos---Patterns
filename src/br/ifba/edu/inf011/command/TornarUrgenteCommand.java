@@ -40,4 +40,8 @@ public class TornarUrgenteCommand implements Command{
 		repositorio.setDocumentoAtual(documentoAntigo);
 		return documentoAntigo;
 	}
+	
+	public String toString() {
+		return "TornarUrgenteCommand: " + documentoNovo.getNumero();
+	}
 }

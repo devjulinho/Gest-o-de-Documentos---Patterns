@@ -42,6 +42,7 @@ public class CommandManager {
 			logger.log("{REFAZER} -" + command.toString());
 			return command;
 		}
+		
 		Command command = historico.get(virtualSize);
 		logger.log("{REFAZER} -" + command.toString());
 		virtualSize++;
