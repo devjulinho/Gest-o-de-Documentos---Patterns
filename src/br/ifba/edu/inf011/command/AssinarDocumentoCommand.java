@@ -21,8 +21,10 @@ public class AssinarDocumentoCommand implements Command{ //TALVEZ NEM PRECISE DE
 	}
 
 	public Documento execute() {
-        if (documentoAntigo == null)
-        		return null;
+        if (documentoAntigo == null) {
+        	throw new RuntimeException("Nenhum documento selecionado para assinar.");
+        }
+        
         Documento assinado = null;
         try {
 	        Operador operador = factory.getOperador();
@@ -33,9 +35,9 @@ public class AssinarDocumentoCommand implements Command{ //TALVEZ NEM PRECISE DE
 	        
 	        documentoNovo = assinado;
 	        
-			} catch (FWDocumentException e) {
-				e.printStackTrace();
-			}
+		} catch (FWDocumentException e) {
+			throw new RuntimeException("Erro ao assinar o documento: " + e.getMessage(), e);
+		}
         return assinado;
 	}
 	

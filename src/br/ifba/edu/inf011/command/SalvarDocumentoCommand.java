@@ -16,14 +16,17 @@ public class SalvarDocumentoCommand implements Command{
 	}
 
 	public Documento execute() {
-		if (documento != null) {
-			try {
-				conteudoAntigo = documento.getConteudo();
-				documento.setConteudo(conteudoNovo);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		if (documento == null) {
+			throw new RuntimeException("Nenhum documento selecionado para salvar.");
 		}
+		
+		try {
+			conteudoAntigo = documento.getConteudo();
+			documento.setConteudo(conteudoNovo);
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao salvar o conteúdo do documento: " + e.getMessage(), e);
+		}
+		
 		repositorio.setDocumentoAtual(documento);
 		return documento;
 	}

@@ -1,13 +1,14 @@
-package br.ifba.edu.inf011.command;
+package br.ifba.edu.inf011.command.macro;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ifba.edu.inf011.command.Command;
 import br.ifba.edu.inf011.model.documentos.Documento;
 
 public class MacroCommand implements Command{
-
 	private List<Command> commands = new ArrayList<Command>();
+	private Documento documentoFinal;
 	
 	public void adicionarCommand(Command command) {
 		commands.add(command);
@@ -17,19 +18,20 @@ public class MacroCommand implements Command{
 		commands.remove(command);
 	}
 	
+	@Override
 	public Documento execute() {
+		Documento documentoAtual = null;
+
 		for (Command command : commands) {
-			command.execute();
+			documentoAtual = command.execute();
 		}
-		
-		Command ultimoCommand = commands.get(commands.size() - 1);
-		
-		return ultimoCommand.getDocumentoNovo();
+
+		this.documentoFinal = documentoAtual;
+		return documentoAtual;
 	}
 	
+	@Override
 	public Documento getDocumentoNovo() {
-		Command ultimoCommand = commands.get(commands.size() - 1);
-
-		return ultimoCommand.getDocumentoNovo();
+		return this.documentoFinal;
 	}
 }
