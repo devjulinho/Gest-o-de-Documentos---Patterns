@@ -35,7 +35,7 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 		comandos.addOperacao("✍️ Assinar", e->this.assinarDocumento());
 		comandos.addOperacao("⏰ Urgente", e->this.tornarUrgente());
 		comandos.addOperacao("📝✍️ Alterar e Assinar", e->this.alterarEAssinar());
-		comandos.addOperacao("🔥✍️ Priorizar", e->this.priorizar());
+		comandos.addOperacao("⏰✍️ Priorizar", e->this.priorizar());
 		comandos.addOperacao("↩️ Desfazer", e->this.undo());
 		comandos.addOperacao("↪️ Refazer", e->this.redo());
 		return comandos;
