@@ -22,7 +22,7 @@ public class CommandManager {
 		if (virtualSize == -1)
 			return null;
 		
-		if (virtualSize < 0) {
+		if (virtualSize <= 0) {
 			Command command = historico.get(0);
 			logger.log("{DESFAZER} -" + command.toString());
 			return command;
@@ -42,6 +42,7 @@ public class CommandManager {
 			logger.log("{REFAZER} -" + command.toString());
 			return command;
 		}
+		
 		Command command = historico.get(virtualSize);
 		logger.log("{REFAZER} -" + command.toString());
 		virtualSize++;

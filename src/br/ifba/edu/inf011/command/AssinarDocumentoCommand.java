@@ -56,4 +56,8 @@ public class AssinarDocumentoCommand implements Command {
 		repositorio.setDocumentoAtual(documentoAntigo);
 		return this.documentoAntigo;
 	}
+	
+	public String toString() {
+		return "AssinarDocumentoCommand - Documento Nº " + documentoAntigo.getNumero();
+	}
 }

@@ -48,4 +48,8 @@ public class SalvarDocumentoCommand implements Command{
 		repositorio.setDocumentoAtual(documentoAntigo);
 		return this.documentoAntigo;
 	}
+	
+	public String toString() {
+		return "SalvarDocumentoCommand: " + documentoNovo.getNumero();
+	}
 }

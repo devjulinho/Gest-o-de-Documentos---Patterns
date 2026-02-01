@@ -40,4 +40,8 @@ public class ProtegerDocumentoCommand implements Command{
 		repositorio.setDocumentoAtual(documentoAntigo);
 		return documentoAntigo;
 	}
+	
+	public String toString() {
+		return "ProtegerDocumentoCommand: " + documentoNovo.getNumero();
+	}
 }

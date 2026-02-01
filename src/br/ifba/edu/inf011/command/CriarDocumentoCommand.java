@@ -66,4 +66,8 @@ public class CriarDocumentoCommand implements Command{
 		repositorio.removeDocumento(documentoNovo);
 		return null;
 	}
+	
+	public String toString() {
+		return "CriarDocumentoCommand - Documento Nº " + documentoNovo.getNumero();
+	}
 }
