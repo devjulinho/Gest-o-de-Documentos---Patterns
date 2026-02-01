@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CommandManager {
 	
-	private List<Command> historico = new ArrayList<Command>(); //??????
+	private List<Command> historico = new ArrayList<Command>();
 	private int virtualSize;
 	
 	public void salvarHistorico(Command command) {
@@ -28,7 +28,8 @@ public class CommandManager {
 		if (virtualSize > historico.size() - 1) {
 			return historico.get(historico.size() - 1);
 		}
+		Command command = historico.get(virtualSize);
 		virtualSize++;
-		return historico.get(virtualSize);
+		return command;
 	}
 }

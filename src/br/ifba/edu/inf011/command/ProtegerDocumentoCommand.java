@@ -25,8 +25,16 @@ public class ProtegerDocumentoCommand implements Command{
         return protegido;  
 	}
 	
-	public Documento getDocumentoNovo() {
+	public Documento redo() {
+		repositorio.atualizarRepositorio(documentoAntigo, documentoNovo);
+		repositorio.setDocumentoAtual(documentoNovo);
 		return documentoNovo;
+	}
+	
+	public Documento undo() {
+		repositorio.atualizarRepositorio(documentoNovo, documentoAntigo);
+		repositorio.setDocumentoAtual(documentoAntigo);
+		return documentoAntigo;
 	}
 	
 	

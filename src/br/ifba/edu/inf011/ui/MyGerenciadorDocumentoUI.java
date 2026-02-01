@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import br.ifba.edu.inf011.af.DocumentOperatorFactory;
 import br.ifba.edu.inf011.command.AssinarDocumentoCommand;
 import br.ifba.edu.inf011.command.Command;
+import br.ifba.edu.inf011.command.CommandManager;
 import br.ifba.edu.inf011.command.CriarDocumentoCommand;
 import br.ifba.edu.inf011.command.ProtegerDocumentoCommand;
 import br.ifba.edu.inf011.command.SalvarDocumentoCommand;
@@ -17,10 +18,12 @@ import br.ifba.edu.inf011.model.documentos.Privacidade;
 public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 	
 	private DocumentOperatorFactory factory;
+	private CommandManager manager;
 	
 	 public MyGerenciadorDocumentoUI(DocumentOperatorFactory factory) {
 		super(factory);
 		this.factory = factory;
+		this.manager = new CommandManager();
 	}
 
 	protected JPanelOperacoes montarMenuOperacoes() {
@@ -31,9 +34,10 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 		comandos.addOperacao("🔑 Proteger", e->this.protegerDocumento());
 		comandos.addOperacao("✍️ Assinar", e->this.assinarDocumento());
 		comandos.addOperacao("⏰ Urgente", e->this.tornarUrgente());
-		// MACROS - Ações Rápidas
 		comandos.addOperacao("📝✍️ Alterar e Assinar", e->this.alterarEAssinar());
 		comandos.addOperacao("🔥✍️ Priorizar", e->this.priorizar());
+		comandos.addOperacao("↩️ Desfazer", e->this.undo());
+		comandos.addOperacao("↪️ Refazer", e->this.redo());
 		return comandos;
 	 }
 	
@@ -126,15 +130,27 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 
 	private void criarDocumento(Privacidade privacidade) {
 		int tipoIndex = this.barraSuperior.getTipoSelecionadoIndice();
-		this.atual = this.executarComando(new CriarDocumentoCommand(tipoIndex, privacidade, factory));
-		this.barraDocs.addDoc("[" + atual.getNumero() + "]");
+		this.atual = this.executarComando(new CriarDocumentoCommand(tipoIndex, privacidade, factory, barraDocs));
 		this.refreshUI();
     }	
 	
 	private Documento executarComando(Command command) {
 		Documento doc;
 		doc = command.execute();
+		this.manager.salvarHistorico(command);
 		return doc;
+	}
+	
+	private void undo() {
+		Command command = this.manager.desfazer();
+		command.undo();
+		this.refreshUI();
+	}
+	
+	private void redo() {
+		Command command = this.manager.refazer();
+		command.redo();
+		this.refreshUI();
 	}
 	
 

@@ -31,7 +31,15 @@ public class SalvarDocumentoCommand implements Command{
 		return documento;
 	}
 	
-	public Documento getDocumentoNovo() {
+	public Documento redo() {
+		documento.setConteudo(conteudoNovo);
+		repositorio.setDocumentoAtual(documento);
+		return this.documento;
+	}
+	
+	public Documento undo() {
+		documento.setConteudo(conteudoAntigo);
+		repositorio.setDocumentoAtual(documento);
 		return this.documento;
 	}
 	
