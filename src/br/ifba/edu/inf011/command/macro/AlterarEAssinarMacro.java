@@ -12,7 +12,7 @@ public class AlterarEAssinarMacro extends MacroCommand {
 	private DocumentOperatorFactory factory;
 	
 	public AlterarEAssinarMacro(Documento documento, String novoConteudo, DocumentOperatorFactory factory) {
-		super();  // Chama o construtor do MacroCommand
+		super();
 		this.documentoInicial = documento;
 		this.novoConteudo = novoConteudo;
 		this.factory = factory;
@@ -20,7 +20,6 @@ public class AlterarEAssinarMacro extends MacroCommand {
 	
 	@Override
 	public Documento execute() {
-		// Salva o estado INICIAL (cópia profunda do documento antes da macro)
 		this.salvarEstadoInicial(documentoInicial);
 		
 		Documento documentoAtual = documentoInicial;
@@ -31,7 +30,6 @@ public class AlterarEAssinarMacro extends MacroCommand {
 		AssinarDocumentoCommand assinarCmd = new AssinarDocumentoCommand(documentoAtual, factory);
 		documentoAtual = assinarCmd.execute();
 		
-		// Salva o estado FINAL (depois da macro)
 		this.salvarEstadoFinal(documentoAtual);
 		
 		return documentoAtual;

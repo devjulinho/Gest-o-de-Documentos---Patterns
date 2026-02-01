@@ -9,44 +9,30 @@ import br.ifba.edu.inf011.model.documentos.Documento;
 
 public class MacroCommand implements Command {
 	private List<Command> commands = new ArrayList<Command>();
-	private Documento documentoAntigo;  // Estado ANTES da macro (cópia)
-	private Documento documentoNovo;    // Estado DEPOIS da macro
+	private Documento documentoAntigo;
+	private Documento documentoNovo;
 	private GerenciadorDocumentoModel repositorio;
 	
 	public MacroCommand() {
 		this.repositorio = GerenciadorDocumentoModel.getInstance();
 	}
 	
-	/**
-	 * Salva o estado INICIAL do documento (antes da macro).
-	 * IMPORTANTE: Cria uma cópia profunda para evitar modificações no original.
-	 */
 	protected void salvarEstadoInicial(Documento documento) {
 		this.documentoAntigo = copiarDocumento(documento);
 	}
 	
-	/**
-	 * Salva o estado FINAL do documento (depois da macro).
-	 */
 	protected void salvarEstadoFinal(Documento documento) {
 		this.documentoNovo = documento;
 	}
 	
-	/**
-	 * Cria uma cópia profunda do documento para preservar o estado original.
-	 * Copia o conteúdo e preserva os metadados.
-	 */
 	private Documento copiarDocumento(Documento original) {
 		try {
-			// Cria uma nova instância do mesmo tipo de documento
 			Documento copia = original.getClass().getDeclaredConstructor().newInstance();
 			copia.setConteudo(original.getConteudo());
 			copia.setNumero(original.getNumero());
-			// Inicializa com o mesmo proprietário e privacidade
 			copia.inicializar(original.getProprietario(), original.getPrivacidade());
 			return copia;
 		} catch (Exception e) {
-			// Se falhar, retorna o original (fallback)
 			return original;
 		}
 	}
@@ -64,7 +50,6 @@ public class MacroCommand implements Command {
 		Documento documentoAtual = null;
 
 		for (Command command : commands) {
-			// Captura o documento ANTES da primeira execução
 			if (documentoAntigo == null) {
 				documentoAntigo = documentoAtual;
 			}
@@ -72,7 +57,6 @@ public class MacroCommand implements Command {
 			documentoAtual = command.execute();
 		}
 
-		// Guarda o documento FINAL (depois de todos os comandos)
 		this.documentoNovo = documentoAtual;
 		return documentoAtual;
 	}
