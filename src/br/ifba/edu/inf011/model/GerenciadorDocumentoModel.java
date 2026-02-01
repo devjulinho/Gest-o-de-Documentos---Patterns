@@ -28,7 +28,6 @@ public class GerenciadorDocumentoModel {
         this.atual = null;
     }
     
-    //SINGLETON!!!!!!!!!!
 	public static GerenciadorDocumentoModel getInstance() {
 		if (instance == null) {
 			instance = new GerenciadorDocumentoModel();
@@ -52,12 +51,12 @@ public class GerenciadorDocumentoModel {
 //        return documento;
 //    }
 
-    public void salvarDocumento(Documento doc, String conteudo) throws Exception {
-        if (doc != null) {
-            doc.setConteudo(conteudo);
-        }
-        this.atual = doc;
-    }
+//    public void salvarDocumento(Documento doc, String conteudo) throws Exception {
+//        if (doc != null) {
+//            doc.setConteudo(conteudo);
+//        }
+//        this.atual = doc;
+//    }
 
     public List<Documento> getRepositorio() {
         return repositorio;

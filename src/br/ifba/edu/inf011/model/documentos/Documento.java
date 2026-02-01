@@ -1,5 +1,7 @@
 package br.ifba.edu.inf011.model.documentos;
 
+import java.time.LocalDateTime;
+
 import br.ifba.edu.inf011.model.FWDocumentException;
 import br.ifba.edu.inf011.model.operador.Operador;
 import br.ifba.edu.inf011.prototype.Prototipavel;

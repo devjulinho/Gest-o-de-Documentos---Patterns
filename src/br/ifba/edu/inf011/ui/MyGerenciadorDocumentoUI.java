@@ -7,6 +7,7 @@ import br.ifba.edu.inf011.command.AssinarDocumentoCommand;
 import br.ifba.edu.inf011.command.Command;
 import br.ifba.edu.inf011.command.CriarDocumentoCommand;
 import br.ifba.edu.inf011.command.ProtegerDocumentoCommand;
+import br.ifba.edu.inf011.command.SalvarDocumentoCommand;
 import br.ifba.edu.inf011.command.TornarUrgenteCommand;
 import br.ifba.edu.inf011.model.documentos.Documento;
 import br.ifba.edu.inf011.model.documentos.Privacidade;
@@ -40,7 +41,7 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 	
 	protected void salvarConteudo() {
         try {
-            this.controller.salvarDocumento(this.atual, this.areaEdicao.getConteudo());
+            this.executarComando(new SalvarDocumentoCommand(this.atual, this.areaEdicao.getConteudo()));
         } catch (Exception e) {
         	JOptionPane.showMessageDialog(this, "Erro ao Salvar: " + e.getMessage());
         }
@@ -59,7 +60,7 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 	}
 
 	protected void assinarDocumento() {
-		this.executarComando(new AssinarDocumentoCommand(this.atual));
+		this.executarComando(new AssinarDocumentoCommand(this.atual, factory));
 		this.refreshUI();
 //		try {
 //			this.controller.assinarDocumento(this.atual);
@@ -101,5 +102,12 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 		return doc;
 	}
 	
+//	private Documento undo() {
+//		this.atual.historico.undo();
+//	}
+//	
+//	private Documento redo() {
+//		
+//	}
 
 }

@@ -14,22 +14,28 @@ import br.ifba.edu.inf011.strategy.AutenticacaoFactory;
 import br.ifba.edu.inf011.strategy.AutenticacaoStrategy;
 
 public class TornarUrgenteCommand implements Command{
-	private Documento documento;
+	private Documento documentoAntigo;
+	private Documento documentoNovo;
 	private GestorDocumento gestor = new GestorDocumento();
 	private GerenciadorDocumentoModel repositorio;
 	
 	public TornarUrgenteCommand(Documento documento) {
-		this.documento = documento;
+		this.documentoAntigo = documento;
 		this.repositorio = GerenciadorDocumentoModel.getInstance();
 	}
 
 	public Documento execute() {
-        if (documento == null)
+        if (documentoAntigo == null)
         	return null;
-        Documento urgente = gestor.tornarUrgente(documento);
-        repositorio.atualizarRepositorio(documento, urgente);
+        Documento urgente = gestor.tornarUrgente(documentoAntigo);
+        repositorio.atualizarRepositorio(documentoAntigo, urgente);
         repositorio.setDocumentoAtual(urgente);
+        documentoNovo = urgente;
         return urgente;  
+	}
+	
+	public Documento getDocumentoNovo() {
+		return documentoNovo;
 	}
 	
 //	public void undo() {

@@ -17,6 +17,7 @@ public class CriarDocumentoCommand implements Command{
     private AutenticacaoStrategy autenticadorStrategy;
     private Autenticador autenticador;
     private GerenciadorDocumentoModel repositorio;
+    private Documento documentoNovo;
 	
 	public CriarDocumentoCommand(int tipoAutenticadorIndex, Privacidade privacidade, DocumentOperatorFactory factory) {
 		this.privacidade = privacidade;
@@ -39,11 +40,17 @@ public class CriarDocumentoCommand implements Command{
 	        
 	        repositorio.addDocumento(documento);
 	        
+	        this.documentoNovo = documento;
+	        
 		} catch (FWDocumentException exception){
 			System.out.println("exception");
 		}
 		
 		return documento;
+	}
+	
+	public Documento getDocumentoNovo() {
+		return documentoNovo;
 	}
 	
 //	public void undo() {
