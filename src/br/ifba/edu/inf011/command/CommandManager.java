@@ -17,6 +17,9 @@ public class CommandManager {
 	}
 	
 	public Command desfazer() {
+		if (virtualSize == -1)
+			return null;
+		
 		if (virtualSize < 0) {
 			return historico.get(0);
 		}
@@ -25,11 +28,19 @@ public class CommandManager {
 	}
 	
 	public Command refazer() {
+		if (virtualSize == -1)
+			return null;
+		
 		if (virtualSize > historico.size() - 1) {
 			return historico.get(historico.size() - 1);
 		}
 		Command command = historico.get(virtualSize);
 		virtualSize++;
 		return command;
+	}
+	
+	public void consolidar() {
+		historico.clear();
+		virtualSize = -1;
 	}
 }

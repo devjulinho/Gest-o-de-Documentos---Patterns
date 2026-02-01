@@ -32,6 +32,7 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 		comandos.addOperacao("⏰ Urgente", e->this.tornarUrgente());
 		comandos.addOperacao("↩️ Desfazer", e->this.undo());
 		comandos.addOperacao("↪️ Refazer", e->this.redo());
+		comandos.addOperacao("✅ Consolidar", e->this.consolidar());
 		return comandos;
 	 }
 	
@@ -78,15 +79,22 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 	
 	private void undo() {
 		Command command = this.manager.desfazer();
+		if (command == null)
+			return;
 		command.undo();
 		this.refreshUI();
 	}
 	
 	private void redo() {
 		Command command = this.manager.refazer();
+		if (command == null)
+			return;
 		command.redo();
 		this.refreshUI();
 	}
 	
+	public void consolidar() {
+		this.manager.consolidar();
+	}
 
 }
