@@ -55,5 +55,6 @@ public class CommandManager {
 	public void consolidar() {
 		historico.clear();
 		virtualSize = -1;
+		logger.log("{CONSOLIDAR} - Histórico limpo");
 	}
 }
