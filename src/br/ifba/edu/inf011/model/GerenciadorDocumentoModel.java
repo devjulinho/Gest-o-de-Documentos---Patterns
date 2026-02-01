@@ -33,6 +33,10 @@ public class GerenciadorDocumentoModel {
         this.repositorio.add(documento);
     }
     
+    public void removeDocumento(Documento documento) {
+    	this.repositorio.remove(documento);
+    }
+    
     public void atualizarRepositorio(Documento antigo, Documento novo) {
         int index = repositorio.indexOf(antigo);
         if (index != -1) {

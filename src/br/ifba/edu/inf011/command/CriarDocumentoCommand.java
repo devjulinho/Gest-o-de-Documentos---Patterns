@@ -7,6 +7,7 @@ import br.ifba.edu.inf011.model.GerenciadorDocumentoModel;
 import br.ifba.edu.inf011.model.documentos.Documento;
 import br.ifba.edu.inf011.model.documentos.Privacidade;
 import br.ifba.edu.inf011.model.operador.Operador;
+import br.ifba.edu.inf011.ui.JPanelListaDocumentos;
 
 public class CriarDocumentoCommand implements Command{
 	private DocumentOperatorFactory factory;
@@ -14,12 +15,14 @@ public class CriarDocumentoCommand implements Command{
     private Autenticador autenticador;
     private GerenciadorDocumentoModel repositorio;
     private Documento documentoNovo;
+    private JPanelListaDocumentos<String> barraDocs;
 	
-	public CriarDocumentoCommand(int tipoAutenticadorIndex, Privacidade privacidade, DocumentOperatorFactory factory) {
+	public CriarDocumentoCommand(int tipoAutenticadorIndex, Privacidade privacidade, DocumentOperatorFactory factory, JPanelListaDocumentos<String> barraDocs) {
 		this.privacidade = privacidade;
 		this.autenticador = new Autenticador(tipoAutenticadorIndex);
 		this.factory = factory;
 		this.repositorio = GerenciadorDocumentoModel.getInstance();
+		this.barraDocs = barraDocs;
 	}
 
 	public Documento execute() {
@@ -34,6 +37,8 @@ public class CriarDocumentoCommand implements Command{
 	        this.autenticador.autenticar(documento);
 	        
 	        repositorio.addDocumento(documento);
+	        
+	        barraDocs.addDoc("[" + documento.getNumero() + "]");
 	        	        
 	        this.documentoNovo = documento;
 	        
@@ -44,11 +49,15 @@ public class CriarDocumentoCommand implements Command{
 		return documento;
 	}
 	
-	public Documento getDocumentoNovo() {
+	public Documento redo() {
+		this.repositorio.addDocumento(documentoNovo);
+		barraDocs.addDoc("[" + documentoNovo.getNumero() + "]");
 		return documentoNovo;
 	}
 	
-//	public void undo() {
-//		this.repositorio.remove(documento);
-//	}
+	public Documento undo() {
+		barraDocs.removeDoc("[" + documentoNovo.getNumero() + "]");
+		repositorio.removeDocumento(documentoNovo);
+		return null;
+	}
 }

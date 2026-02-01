@@ -25,8 +25,16 @@ public class TornarUrgenteCommand implements Command{
         return urgente;  
 	}
 	
-	public Documento getDocumentoNovo() {
+	public Documento redo() {
+		repositorio.atualizarRepositorio(documentoAntigo, documentoNovo);
+		repositorio.setDocumentoAtual(documentoNovo);
 		return documentoNovo;
+	}
+	
+	public Documento undo() {
+		repositorio.atualizarRepositorio(documentoNovo, documentoAntigo);
+		repositorio.setDocumentoAtual(documentoAntigo);
+		return documentoAntigo;
 	}
 	
 //	public void undo() {

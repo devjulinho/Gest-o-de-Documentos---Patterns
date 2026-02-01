@@ -39,11 +39,15 @@ public class AssinarDocumentoCommand implements Command{ //TALVEZ NEM PRECISE DE
         return assinado;
 	}
 	
-	public Documento getDocumentoNovo() {
+	public Documento redo() {
+		repositorio.atualizarRepositorio(documentoAntigo, documentoNovo);
+		repositorio.setDocumentoAtual(documentoNovo);
 		return this.documentoNovo;
 	}
 	
-//	public void undo() {
-//
-//	}
+	public Documento undo() {
+		repositorio.atualizarRepositorio(documentoNovo, documentoAntigo);
+		repositorio.setDocumentoAtual(documentoAntigo);
+		return this.documentoAntigo;
+	}
 }
