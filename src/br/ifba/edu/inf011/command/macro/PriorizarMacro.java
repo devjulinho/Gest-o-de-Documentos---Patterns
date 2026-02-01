@@ -5,10 +5,6 @@ import br.ifba.edu.inf011.command.AssinarDocumentoCommand;
 import br.ifba.edu.inf011.command.TornarUrgenteCommand;
 import br.ifba.edu.inf011.model.documentos.Documento;
 
-/**
- * Macro que executa a sequência: Tornar Urgente → Assinar
- * Esta é uma "Ação Rápida" que prioriza um documento tornando-o urgente e assinando em um único bloco.
- */
 public class PriorizarMacro extends MacroCommand {
 	
 	private Documento documentoInicial;

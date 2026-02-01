@@ -7,7 +7,7 @@ import br.ifba.edu.inf011.model.GestorDocumento;
 import br.ifba.edu.inf011.model.documentos.Documento;
 import br.ifba.edu.inf011.model.operador.Operador;
 
-public class AssinarDocumentoCommand implements Command{ //TALVEZ NEM PRECISE DESSA CLASSE
+public class AssinarDocumentoCommand implements Command {
 	private Documento documentoNovo;
 	private Documento documentoAntigo;
 	private DocumentOperatorFactory factory;
@@ -39,6 +39,10 @@ public class AssinarDocumentoCommand implements Command{ //TALVEZ NEM PRECISE DE
 			throw new RuntimeException("Erro ao assinar o documento: " + e.getMessage(), e);
 		}
         return assinado;
+	}
+
+	public Documento getDocumentoNovo() {
+		return this.documentoNovo;
 	}
 	
 	public Documento redo() {

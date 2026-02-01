@@ -49,6 +49,10 @@ public class CriarDocumentoCommand implements Command{
 		return documento;
 	}
 	
+	public Documento getDocumentoNovo() {
+		return documentoNovo;
+	}
+	
 	public Documento redo() {
 		this.repositorio.addDocumento(documentoNovo);
 		barraDocs.addDoc("[" + documentoNovo.getNumero() + "]");
