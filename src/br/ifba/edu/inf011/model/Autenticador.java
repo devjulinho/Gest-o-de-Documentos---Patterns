@@ -14,3 +14,5 @@ public class Autenticador {
 		AutenticadorHandler.head.autenticar(documento, this.tipo);
 	}
 }
+
+//teste
