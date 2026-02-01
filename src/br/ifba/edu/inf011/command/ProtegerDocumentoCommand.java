@@ -25,6 +25,10 @@ public class ProtegerDocumentoCommand implements Command{
         return protegido;  
 	}
 	
+	public Documento getDocumentoNovo() {
+		return documentoNovo;
+	}
+	
 	public Documento redo() {
 		repositorio.atualizarRepositorio(documentoAntigo, documentoNovo);
 		repositorio.setDocumentoAtual(documentoNovo);
@@ -36,9 +40,4 @@ public class ProtegerDocumentoCommand implements Command{
 		repositorio.setDocumentoAtual(documentoAntigo);
 		return documentoAntigo;
 	}
-	
-	
-//	public void undo() {
-//
-//	}
 }

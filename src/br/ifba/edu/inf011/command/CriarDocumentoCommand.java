@@ -49,6 +49,10 @@ public class CriarDocumentoCommand implements Command{
 		return documento;
 	}
 	
+	public Documento getDocumentoNovo() {
+		return documentoNovo;
+	}
+	
 	public Documento redo() {
 		if (repositorio.getRepositorio().contains(documentoNovo))
 			return documentoNovo;

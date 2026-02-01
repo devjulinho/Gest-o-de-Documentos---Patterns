@@ -25,6 +25,10 @@ public class TornarUrgenteCommand implements Command{
         return urgente;  
 	}
 	
+	public Documento getDocumentoNovo() {
+		return documentoNovo;
+	}
+	
 	public Documento redo() {
 		repositorio.atualizarRepositorio(documentoAntigo, documentoNovo);
 		repositorio.setDocumentoAtual(documentoNovo);
@@ -36,8 +40,4 @@ public class TornarUrgenteCommand implements Command{
 		repositorio.setDocumentoAtual(documentoAntigo);
 		return documentoAntigo;
 	}
-	
-//	public void undo() {
-//
-//	}
 }
