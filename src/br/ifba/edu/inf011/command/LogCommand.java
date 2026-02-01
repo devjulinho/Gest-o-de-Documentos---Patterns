@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class LogCommand {
 	
-	private static final String LOG_FILE = "DocumentEditor.txt";
+	private static final String LOG_FILE = "SystemLog.txt";
 	
 	public void log(String acao) {
 		try (FileWriter fwriter = new FileWriter(LOG_FILE, true);
