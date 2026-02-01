@@ -35,7 +35,6 @@ public abstract class AbstractDocumentoBase implements Documento{
 	public void inicializar(Operador proprietario, Privacidade privacidade) {
 		this.proprietario = proprietario;
 		this.privacidade = privacidade;
-		
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package br.ifba.edu.inf011.decorator;
 
+import java.time.LocalDateTime;
+
 import br.ifba.edu.inf011.model.FWDocumentException;
 import br.ifba.edu.inf011.model.documentos.Documento;
 import br.ifba.edu.inf011.model.documentos.Privacidade;
@@ -54,6 +56,6 @@ public class DocumentoDecorator implements Documento{
 	public void setNumero(String numero) {
 		this.wrappeeDocumento.setNumero(numero);
 		
-	}	
+	}
 	
 }

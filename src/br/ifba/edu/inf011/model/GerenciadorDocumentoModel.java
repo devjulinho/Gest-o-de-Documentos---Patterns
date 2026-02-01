@@ -22,30 +22,36 @@ public class GerenciadorDocumentoModel {
         this.factory = factory;
         this.gestor = new GestorDocumento();
         this.atual = null;
-
-        InicializadorChain.inicializar();
     }
+    
+    //SINGLETON!!!!!!!!!!
+	public static GerenciadorDocumentoModel getInstance() {
+		if (instance == null) {
+			instance = new GerenciadorDocumentoModel();
+		}
+		return instance;
+	}
 
-    public Documento criarDocumento(int tipoAutenticadorIndex, Privacidade privacidade) throws FWDocumentException {
-        Operador operador = factory.getOperador();
-        Documento documento = factory.getDocumento();
-        
-        operador.inicializar("jdc", "João das Couves");
-        documento.inicializar(operador, privacidade);
-        autenticador = new Autenticador(tipoAutenticadorIndex);
-        this.autenticador.autenticar(documento);
-        
-        this.repositorio.add(documento);
-        this.atual = documento;
-        return documento;
-    }
+//    public Documento criarDocumento(int tipoAutenticadorIndex, Privacidade privacidade) throws FWDocumentException {
+//        Operador operador = factory.getOperador();
+//        Documento documento = factory.getDocumento();
+//        
+//        operador.inicializar("jdc", "João das Couves");
+//        documento.inicializar(operador, privacidade);
+//        autenticador = new Autenticador(tipoAutenticadorIndex);
+//        this.autenticador.autenticar(documento);
+//        
+//        this.repositorio.add(documento);
+//        this.atual = documento;
+//        return documento;
+//    }
 
-    public void salvarDocumento(Documento doc, String conteudo) throws Exception {
-        if (doc != null) {
-            doc.setConteudo(conteudo);
-        }
-        this.atual = doc;
-    }
+//    public void salvarDocumento(Documento doc, String conteudo) throws Exception {
+//        if (doc != null) {
+//            doc.setConteudo(conteudo);
+//        }
+//        this.atual = doc;
+//    }
 
     public List<Documento> getRepositorio() {
         return repositorio;
