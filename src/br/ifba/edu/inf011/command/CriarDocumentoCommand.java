@@ -34,7 +34,7 @@ public class CriarDocumentoCommand implements Command{
 	        this.autenticador.autenticar(documento);
 	        
 	        repositorio.addDocumento(documento);
-	        
+	        	        
 	        this.documentoNovo = documento;
 	        
 		} catch (FWDocumentException exception){

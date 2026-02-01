@@ -1,16 +1,22 @@
 package br.ifba.edu.inf011.ui;
 
-import javax.swing.JOptionPane;
-
 import br.ifba.edu.inf011.af.DocumentOperatorFactory;
-import br.ifba.edu.inf011.model.FWDocumentException;
+import br.ifba.edu.inf011.command.AssinarDocumentoCommand;
+import br.ifba.edu.inf011.command.Command;
+import br.ifba.edu.inf011.command.CriarDocumentoCommand;
+import br.ifba.edu.inf011.command.ProtegerDocumentoCommand;
+import br.ifba.edu.inf011.command.SalvarDocumentoCommand;
+import br.ifba.edu.inf011.command.TornarUrgenteCommand;
+import br.ifba.edu.inf011.model.documentos.Documento;
 import br.ifba.edu.inf011.model.documentos.Privacidade;
 
 public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 	
+	private DocumentOperatorFactory factory;
 	
 	 public MyGerenciadorDocumentoUI(DocumentOperatorFactory factory) {
 		super(factory);
+		this.factory = factory;
 	}
 
 	protected JPanelOperacoes montarMenuOperacoes() {
@@ -33,50 +39,37 @@ public class MyGerenciadorDocumentoUI extends AbstractGerenciadorDocumentosUI{
 	}
 	
 	protected void salvarConteudo() {
-        try {
-            this.controller.salvarDocumento(this.atual, this.areaEdicao.getConteudo());
-        } catch (Exception e) {
-        	JOptionPane.showMessageDialog(this, "Erro ao Salvar: " + e.getMessage());
-        }
+        this.executarComando(new SalvarDocumentoCommand(this.atual, this.areaEdicao.getConteudo()));
+        this.refreshUI();
     }	
 	
 	protected void protegerDocumento() {
-		try {
-			this.controller.protegerDocumento(this.atual);
-			this.refreshUI();
-		} catch (FWDocumentException e) {
-			JOptionPane.showMessageDialog(this, "Erro ao proteger: " + e.getMessage());
-		}
+		this.executarComando(new ProtegerDocumentoCommand(this.atual));
+		this.refreshUI();
 	}
 
 	protected void assinarDocumento() {
-		try {
-			this.controller.assinarDocumento(this.atual);
-			this.refreshUI();
-		} catch (FWDocumentException e) {
-			JOptionPane.showMessageDialog(this, "Erro ao assinar: " + e.getMessage());
-		}		
+		this.executarComando(new AssinarDocumentoCommand(this.atual, factory));
+		this.refreshUI();	
 	}
 	
 	protected void tornarUrgente() {
-		try {
-			this.controller.tornarUrgente(this.atual);
-			this.refreshUI();
-		} catch (FWDocumentException e) {
-			JOptionPane.showMessageDialog(this, "Erro ao tornar urgente: " + e.getMessage());
-		}		
+		this.executarComando(new TornarUrgenteCommand(this.atual));
+        this.refreshUI();	
 	}	
 
 	private void criarDocumento(Privacidade privacidade) {
-        try {
-            int tipoIndex = this.barraSuperior.getTipoSelecionadoIndice();
-            this.atual = this.controller.criarDocumento(tipoIndex, privacidade);
-            this.barraDocs.addDoc("[" + atual.getNumero() + "]");
-            this.refreshUI();
-        } catch (FWDocumentException e) {
-            JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
-        }
+		int tipoIndex = this.barraSuperior.getTipoSelecionadoIndice();
+		this.atual = this.executarComando(new CriarDocumentoCommand(tipoIndex, privacidade, factory));
+		this.barraDocs.addDoc("[" + atual.getNumero() + "]");
+		this.refreshUI();
     }	
+	
+	private Documento executarComando(Command command) {
+		Documento doc;
+		doc = command.execute();
+		return doc;
+	}
 	
 
 }

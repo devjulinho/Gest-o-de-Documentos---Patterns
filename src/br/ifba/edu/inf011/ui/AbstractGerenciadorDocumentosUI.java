@@ -37,7 +37,7 @@ public abstract class AbstractGerenciadorDocumentosUI extends JFrame implements 
     
 
     public AbstractGerenciadorDocumentosUI(DocumentOperatorFactory factory) {
-        this.controller = new GerenciadorDocumentoModel(factory);
+        this.controller = GerenciadorDocumentoModel.getInstance();
     	this.listDocs = new DefaultListModel<String>();
     	this.barraSuperior = new JPanelBarraSuperior<String>(tipos);
     	this.areaEdicao = new JPanelAreaEdicao();
