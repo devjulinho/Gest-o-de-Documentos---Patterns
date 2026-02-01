@@ -35,8 +35,6 @@ public class GerenciadorDocumentoModel {
         autenticador = new Autenticador(tipoAutenticadorIndex);
         this.autenticador.autenticar(documento);
         
-        this.autenticador.autenticar(documento);
-        
         this.repositorio.add(documento);
         this.atual = documento;
         return documento;
