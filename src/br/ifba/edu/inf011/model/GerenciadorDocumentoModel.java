@@ -22,6 +22,8 @@ public class GerenciadorDocumentoModel {
         this.factory = factory;
         this.gestor = new GestorDocumento();
         this.atual = null;
+
+        InicializadorChain.inicializar();        
     }
     
     //SINGLETON!!!!!!!!!!
